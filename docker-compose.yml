@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: carshare-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: carshare
+      POSTGRES_USER: carshare
+      POSTGRES_PASSWORD: carshare
+    ports:
+      - "5433:5432"
+    volumes:
+      - carshare-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U carshare -d carshare"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  carshare-postgres:

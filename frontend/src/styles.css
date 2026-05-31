@@ -1,0 +1,1695 @@
+:root {
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #102027;
+  background: #f4f7fb;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  --ink: #102027;
+  --muted: #637083;
+  --line: #dce4ef;
+  --panel: #ffffff;
+  --soft: #eef4f8;
+  --primary: #0f766e;
+  --primary-dark: #115e59;
+  --accent: #e4572e;
+  --blue: #2563eb;
+  --danger: #c2410c;
+  --danger-soft: #fff7ed;
+  --focus: 0 0 0 3px rgba(15, 118, 110, 0.18);
+  --shadow: 0 12px 34px rgba(20, 35, 55, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.appShell {
+  min-height: 100vh;
+  padding-bottom: 78px;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(220, 228, 239, 0.9);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(14px);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  padding: 0;
+}
+
+.brand span {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border-radius: 8px;
+  background: #102027;
+  color: #fff;
+  font-weight: 800;
+}
+
+.brand strong {
+  font-size: 1.05rem;
+}
+
+.topbarActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.userPill {
+  max-width: 108px;
+  overflow: hidden;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: var(--soft);
+  color: var(--muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.screen {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+}
+
+.page {
+  padding: 18px 16px 28px;
+}
+
+.pageHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.pageHeader h1,
+.authCard h1,
+.carTitleBlock h1,
+.stateBlock h1 {
+  margin: 0;
+  font-size: 1.75rem;
+  line-height: 1.1;
+}
+
+.pageHeader p,
+.carTitleBlock p,
+.tripMain p,
+.authCard p,
+.tableRow span,
+.smallNote {
+  color: var(--muted);
+}
+
+.eyebrow {
+  margin: 0 0 5px;
+  color: var(--primary);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.button {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-weight: 750;
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    background 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    color 160ms ease;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+}
+
+.button:not(:disabled):active {
+  transform: translateY(1px);
+}
+
+.button-primary {
+  background: var(--primary);
+  color: #fff;
+}
+
+.button-primary:hover {
+  background: var(--primary-dark);
+  box-shadow: 0 10px 22px rgba(15, 118, 110, 0.18);
+}
+
+.button-secondary {
+  border-color: var(--line);
+  background: #fff;
+  color: var(--ink);
+}
+
+.button-secondary:hover {
+  border-color: #b7c8d8;
+  background: #f8fbfd;
+}
+
+.button-ghost {
+  min-width: 42px;
+  background: transparent;
+  color: var(--muted);
+}
+
+.button-ghost:hover {
+  background: var(--soft);
+  color: var(--ink);
+}
+
+.button-danger {
+  background: var(--danger);
+  color: #fff;
+}
+
+.button-danger:hover {
+  background: #9a3412;
+  box-shadow: 0 10px 22px rgba(194, 65, 12, 0.18);
+}
+
+.button:focus-visible,
+.brand:focus-visible,
+.bottomNav a:focus-visible,
+.categoryRail button:focus-visible,
+.rateTabs button:focus-visible,
+.adminTabs button:focus-visible,
+.startTabs button:focus-visible,
+.segmented button:focus-visible,
+.adminImagePreview button:focus-visible,
+.fallbackMarker:focus-visible,
+.backLink:focus-visible {
+  outline: none;
+  box-shadow: var(--focus);
+}
+
+.bottomNav {
+  position: fixed;
+  right: 12px;
+  bottom: 12px;
+  left: 12px;
+  z-index: 40;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(54px, 1fr));
+  gap: 6px;
+  padding: 8px;
+  border: 1px solid rgba(220, 228, 239, 0.95);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: var(--shadow);
+}
+
+.bottomNav a {
+  display: flex;
+  min-height: 48px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 0.74rem;
+  transition:
+    background 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.bottomNav a.active {
+  background: #e7f5f2;
+  color: var(--primary-dark);
+}
+
+.bottomNav a:hover {
+  background: var(--soft);
+  color: var(--ink);
+  transform: translateY(-1px);
+}
+
+.categoryRail {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  margin: 0 -16px 14px;
+  padding: 0 16px 6px;
+  scrollbar-width: none;
+}
+
+.categoryRail::-webkit-scrollbar {
+  display: none;
+}
+
+.categoryRail button,
+.rateTabs button,
+.adminTabs button,
+.startTabs button,
+.segmented button {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--muted);
+  cursor: pointer;
+  font-weight: 720;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.categoryRail button {
+  flex: 0 0 auto;
+  padding: 10px 13px;
+}
+
+.categoryRail button.active,
+.rateTabs button.active,
+.adminTabs button.active,
+.startTabs button.active,
+.segmented button.active {
+  border-color: #92d2c9;
+  background: #e7f5f2;
+  color: var(--primary-dark);
+}
+
+.categoryRail button:hover,
+.rateTabs button:hover,
+.adminTabs button:hover,
+.startTabs button:hover,
+.segmented button:hover {
+  border-color: #b7c8d8;
+  background: #f8fbfd;
+  color: var(--ink);
+  transform: translateY(-1px);
+}
+
+.categoryRail button.active:hover,
+.rateTabs button.active:hover,
+.adminTabs button.active:hover,
+.startTabs button.active:hover,
+.segmented button.active:hover {
+  border-color: #70beb3;
+  background: #dff2ee;
+  color: var(--primary-dark);
+}
+
+.catalogToolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.catalogToolbar > div:first-child {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  color: var(--muted);
+}
+
+.catalogToolbar strong {
+  color: var(--ink);
+  font-size: 1.2rem;
+}
+
+.segmented {
+  display: inline-grid;
+  grid-template-columns: repeat(2, 44px);
+  gap: 6px;
+  padding: 4px;
+  border-radius: 8px;
+  background: #e9eef5;
+}
+
+.segmented button {
+  display: grid;
+  min-height: 38px;
+  place-items: center;
+  padding: 0;
+}
+
+.carGrid {
+  display: grid;
+  gap: 14px;
+}
+
+.carCard {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  box-shadow: 0 8px 22px rgba(20, 35, 55, 0.07);
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.carCard img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  transition: transform 220ms ease;
+}
+
+.carCard:hover {
+  border-color: #bfd0df;
+  box-shadow: 0 16px 34px rgba(20, 35, 55, 0.13);
+  transform: translateY(-2px);
+}
+
+.carCard:hover img {
+  transform: scale(1.025);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+.carCardBody {
+  padding: 13px;
+}
+
+.cardTopline,
+.tripMain,
+.modalHeader,
+.bookingPanel header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.chip,
+.status {
+  display: inline-flex;
+  min-height: 26px;
+  align-items: center;
+  border-radius: 8px;
+  padding: 5px 9px;
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.chip {
+  background: #edf7f4;
+  color: var(--primary-dark);
+}
+
+.status {
+  background: #eef2ff;
+  color: #3730a3;
+}
+
+.status-available,
+.status-published,
+.status-active {
+  background: #e7f5f2;
+  color: var(--primary-dark);
+}
+
+.status-reserved,
+.status-pending {
+  background: #fff7ed;
+  color: #9a3412;
+}
+
+.status-maintenance,
+.status-expired,
+.status-blocked,
+.status-hidden,
+.status-disabled,
+.status-cancelled {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.carCard h3,
+.tripCard h3,
+.sectionBlock h2,
+.bookingPanel h2,
+.modal h2 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.carCard p {
+  margin: 4px 0 10px;
+  color: var(--muted);
+}
+
+.carMeta {
+  display: grid;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.carMeta span {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 7px;
+}
+
+.carMeta span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.priceRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 8px;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.priceRow div {
+  min-width: 0;
+}
+
+.priceRow strong {
+  display: block;
+  font-size: 1.03rem;
+}
+
+.priceRow span {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.cardAction {
+  min-height: 40px;
+  padding-inline: 12px;
+}
+
+.mapPanel {
+  position: relative;
+  overflow: hidden;
+  height: 62vh;
+  min-height: 430px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #d8e7ed;
+}
+
+.yandexMap,
+.mapFallback {
+  height: 100%;
+  width: 100%;
+}
+
+.mapLoading {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 3;
+  padding: 7px 10px;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: var(--shadow);
+  color: var(--muted);
+}
+
+.mapNotice {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  left: 10px;
+  z-index: 3;
+  padding: 9px 11px;
+  border: 1px solid rgba(220, 228, 239, 0.95);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--muted);
+  font-weight: 700;
+  box-shadow: 0 8px 18px rgba(20, 35, 55, 0.1);
+}
+
+.mapFallback {
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.38) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.38) 1px, transparent 1px),
+    linear-gradient(135deg, #d7e7ed, #eef6f4 62%, #dfeaf3);
+  background-size:
+    44px 44px,
+    44px 44px,
+    auto;
+}
+
+.fallbackRoad {
+  position: absolute;
+  display: block;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.14);
+}
+
+.fallbackRoadMain {
+  top: 18%;
+  left: 50%;
+  width: 54px;
+  height: 82%;
+  transform: translateX(-50%) rotate(8deg);
+}
+
+.fallbackRoadRing {
+  top: 19%;
+  left: 15%;
+  width: 70%;
+  height: 56%;
+  border: 22px solid rgba(255, 255, 255, 0.74);
+  background: transparent;
+}
+
+.fallbackRoadDiagonal {
+  top: 49%;
+  left: -8%;
+  width: 116%;
+  height: 42px;
+  transform: rotate(-15deg);
+}
+
+.fallbackMarker {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: 4px solid #fff;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.26);
+  transform: translate(-50%, -50%);
+}
+
+.fallbackMarker span {
+  width: 11px;
+  height: 11px;
+  border-radius: 999px;
+  background: #fff;
+}
+
+.fallbackMarker strong {
+  position: absolute;
+  top: calc(100% + 7px);
+  left: 50%;
+  max-width: 140px;
+  overflow: hidden;
+  padding: 5px 7px;
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+  font-size: 0.74rem;
+  opacity: 0;
+  pointer-events: none;
+  text-overflow: ellipsis;
+  transform: translateX(-50%);
+  transition: opacity 160ms ease;
+  white-space: nowrap;
+}
+
+.fallbackMarker:focus-visible strong,
+.fallbackMarker:hover strong {
+  opacity: 1;
+}
+
+.mapEmpty {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  color: var(--muted);
+  font-weight: 720;
+  text-align: center;
+}
+
+.mapPopup {
+  display: grid;
+  width: 180px;
+  gap: 4px;
+}
+
+.mapPopup img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.mapPopup a {
+  color: var(--primary-dark);
+  font-weight: 800;
+}
+
+.filterSheet {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 50;
+  max-height: 88vh;
+  overflow: auto;
+  padding: 10px 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px 8px 0 0;
+  background: #fff;
+  box-shadow: var(--shadow);
+  transform: translateY(105%);
+  transition: transform 180ms ease;
+}
+
+.filterSheet.open {
+  transform: translateY(0);
+}
+
+.sheetHandle {
+  width: 40px;
+  height: 4px;
+  margin: 0 auto 12px;
+  border-radius: 999px;
+  background: #cfd8e3;
+}
+
+.sheetHeader,
+.sheetActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.filterGrid,
+.formGrid {
+  display: grid;
+  gap: 12px;
+}
+
+.formWide {
+  grid-column: 1 / -1;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 720;
+}
+
+.fieldControl {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+  padding: 10px 12px;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background 160ms ease;
+}
+
+.fieldControl input {
+  border: 0;
+}
+
+.field input:hover,
+.field select:hover,
+.field textarea:hover {
+  border-color: #b7c8d8;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--primary);
+  box-shadow: var(--focus);
+  outline: none;
+}
+
+.fieldControl span {
+  padding-right: 12px;
+  color: var(--muted);
+}
+
+.fieldError .fieldControl,
+.fieldError input,
+.fieldError select,
+.fieldError textarea {
+  border-color: #ef4444;
+}
+
+.fieldError .fieldControl {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.field textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.fieldErrorText,
+.formError {
+  color: #b91c1c;
+}
+
+.fieldHint {
+  color: var(--muted);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.fieldErrorText {
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.toggleRow,
+.optionRow {
+  display: grid;
+  grid-template-columns: 20px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.optionRow {
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.optionRow span {
+  display: grid;
+  gap: 2px;
+}
+
+.optionRow small {
+  color: var(--muted);
+}
+
+.sheetActions {
+  position: sticky;
+  bottom: -18px;
+  margin: 18px -16px -18px;
+  padding: 12px 16px 18px;
+  background: #fff;
+}
+
+.sheetActions .button {
+  flex: 1;
+}
+
+.stateBlock {
+  display: grid;
+  min-height: 180px;
+  place-items: center;
+  gap: 10px;
+  margin: 18px 0;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--muted);
+  text-align: center;
+}
+
+.stateBlock.compact {
+  min-height: auto;
+  padding: 18px;
+}
+
+.stateBlock.error,
+.formError {
+  border-radius: 8px;
+  background: #fff1f2;
+  color: #991b1b;
+}
+
+.formError,
+.successNote {
+  padding: 10px 12px;
+}
+
+.formSummary {
+  display: grid;
+  gap: 7px;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  background: #fff7f7;
+  color: #7f1d1d;
+  padding: 12px;
+}
+
+.formSummary strong {
+  color: #991b1b;
+}
+
+.formSummary p,
+.formSummary ul {
+  margin: 0;
+}
+
+.formSummary ul {
+  display: grid;
+  gap: 5px;
+  padding-left: 18px;
+}
+
+.successNote {
+  border-radius: 8px;
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 12px;
+  color: var(--muted);
+  font-weight: 720;
+}
+
+.carHero {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #dbe6ef;
+}
+
+.carHero img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+
+.heroBadges {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  left: 10px;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.carTitleBlock {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin: 16px 0;
+}
+
+.ratingPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: #fff7ed;
+  color: #9a3412;
+  font-weight: 800;
+}
+
+.specGrid,
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.specItem,
+.statCard,
+.sectionBlock,
+.bookingPanel,
+.tripCard,
+.authCard {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.specItem,
+.statCard,
+.sectionBlock,
+.bookingPanel,
+.tripCard {
+  transition:
+    border-color 170ms ease,
+    box-shadow 170ms ease,
+    transform 170ms ease;
+}
+
+.specItem:hover,
+.statCard:hover,
+.sectionBlock:hover,
+.bookingPanel:hover,
+.tripCard:hover {
+  border-color: #c8d7e4;
+  box-shadow: 0 10px 24px rgba(20, 35, 55, 0.07);
+}
+
+.tripCard:hover {
+  transform: translateY(-1px);
+}
+
+.specItem,
+.statCard {
+  padding: 12px;
+}
+
+.specItem span,
+.statCard span,
+.tripDetails dt {
+  display: block;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.specItem strong,
+.statCard strong {
+  display: block;
+  margin-top: 4px;
+}
+
+.sectionBlock,
+.bookingPanel {
+  display: grid;
+  gap: 14px;
+  margin: 16px 0;
+  padding: 14px;
+}
+
+.featureList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.featureList span {
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: var(--soft);
+  color: #334155;
+  font-weight: 700;
+}
+
+.bookingPanel {
+  box-shadow: 0 10px 28px rgba(15, 118, 110, 0.11);
+}
+
+.rateTabs,
+.adminTabs,
+.startTabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.startTabs {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.adminTabs {
+  display: flex;
+  margin: 0 -16px 14px;
+  overflow-x: auto;
+  padding: 0 16px 6px;
+  scrollbar-width: none;
+}
+
+.adminActionBar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+.adminSectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 18px 0 10px;
+}
+
+.adminSectionHeader h2 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.adminCreatePanel {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 14px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.adminUploadButton {
+  width: max-content;
+  max-width: 100%;
+}
+
+.adminUploadButton.disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+}
+
+.fileUploadInput {
+  display: none;
+}
+
+.adminFixedLocation {
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  gap: 10px;
+  align-items: start;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f7fbfa;
+  color: var(--muted);
+}
+
+.adminFixedLocation > svg {
+  margin-top: 2px;
+  color: var(--primary);
+}
+
+.adminFixedLocation div {
+  display: grid;
+  gap: 3px;
+}
+
+.adminFixedLocation span {
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.adminFixedLocation strong {
+  color: var(--ink);
+  font-size: 0.96rem;
+}
+
+.adminFixedLocation small {
+  line-height: 1.35;
+}
+
+.adminModelFields {
+  display: grid;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfcfc;
+}
+
+.adminImagePreviewGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+  gap: 10px;
+}
+
+.adminImagePreview {
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  transition:
+    border-color 170ms ease,
+    box-shadow 170ms ease,
+    transform 170ms ease;
+}
+
+.adminImagePreview img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  transition: transform 220ms ease;
+}
+
+.adminImagePreview button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: inline-grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.74);
+  border-radius: 8px;
+  background: rgba(16, 32, 39, 0.78);
+  color: #fff;
+  cursor: pointer;
+  transition:
+    background 160ms ease,
+    transform 160ms ease;
+}
+
+.adminImagePreview:hover {
+  border-color: #bfd0df;
+  box-shadow: 0 12px 26px rgba(20, 35, 55, 0.11);
+}
+
+.adminImagePreview:hover img {
+  transform: scale(1.035);
+}
+
+.adminImagePreview button:hover {
+  background: var(--danger);
+  transform: scale(1.04);
+}
+
+.adminFormActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.adminRowActions {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: end;
+  gap: 8px;
+}
+
+.adminDeleteButton {
+  width: 42px;
+  min-width: 42px;
+  border-color: #fed7aa;
+  background: #fff;
+  color: var(--danger);
+  padding-inline: 0;
+}
+
+.adminDeleteButton:hover:not(:disabled) {
+  border-color: var(--danger);
+  background: var(--danger);
+  color: #fff;
+  box-shadow: 0 10px 22px rgba(194, 65, 12, 0.18);
+}
+
+.adminTabs::-webkit-scrollbar {
+  display: none;
+}
+
+.rateTabs button,
+.adminTabs button,
+.startTabs button {
+  min-height: 42px;
+  padding: 8px 10px;
+}
+
+.adminTabs button {
+  flex: 0 0 auto;
+  min-width: max-content;
+  white-space: nowrap;
+}
+
+.optionList,
+.reviews,
+.tripList,
+.dataTable {
+  display: grid;
+  gap: 10px;
+}
+
+.quoteBox,
+.receiptTotal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  background: #102027;
+  color: #fff;
+}
+
+.quoteBox strong,
+.receiptTotal strong {
+  font-size: 1.35rem;
+}
+
+.startPicker,
+.bookingTimeline {
+  display: grid;
+  gap: 9px;
+}
+
+.bookingTimeline {
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f8fafc;
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.reviewItem {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.reviewItem div {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.reviewItem span {
+  color: var(--muted);
+}
+
+.reviewItem p {
+  margin: 0;
+}
+
+.reviewForm {
+  display: grid;
+  gap: 12px;
+}
+
+.authPage {
+  display: grid;
+  min-height: calc(100vh - 156px);
+  place-items: center;
+  padding: 18px 16px 110px;
+}
+
+.authCard {
+  display: grid;
+  width: min(420px, 100%);
+  gap: 13px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+}
+
+.authCard p {
+  margin: 0;
+}
+
+.authCard a {
+  color: var(--primary-dark);
+  font-weight: 800;
+}
+
+.tripCard {
+  display: grid;
+  gap: 12px;
+  padding: 13px;
+}
+
+.tripDetails {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin: 0;
+}
+
+.tripDetails div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.tripDetails dd {
+  margin: 0;
+  font-weight: 720;
+  text-align: right;
+}
+
+.tripOptions {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.tripNotice {
+  display: grid;
+  gap: 3px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f8fafc;
+  color: var(--muted);
+}
+
+.tripNotice strong {
+  color: var(--ink);
+}
+
+.tripNotice.success {
+  border-color: #a7f3d0;
+  background: #ecfdf5;
+}
+
+.tripNotice.warning {
+  border-color: #fed7aa;
+  background: #fff7ed;
+}
+
+.tripNotice.danger {
+  border-color: #fecaca;
+  background: #fff1f2;
+}
+
+.tripActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: grid;
+  place-items: end center;
+  padding: 16px;
+  background: rgba(16, 32, 39, 0.42);
+}
+
+.modal {
+  width: min(480px, 100%);
+  max-height: 86vh;
+  overflow: auto;
+  border-radius: 8px;
+  background: #fff;
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+
+.cancelModal {
+  display: grid;
+  gap: 12px;
+}
+
+.modalText {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.modalActions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.receiptMeta,
+.receiptLines {
+  display: grid;
+  gap: 9px;
+  margin: 14px 0;
+}
+
+.receiptMeta {
+  color: var(--muted);
+}
+
+.receiptLines div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 9px;
+  border-bottom: 1px dashed var(--line);
+}
+
+@media (min-width: 560px) {
+  .modalActions {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.dataTable {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.tableRow {
+  display: grid;
+  gap: 12px;
+  padding: 12px;
+  border-bottom: 1px solid var(--line);
+  transition:
+    background 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.tableRow:hover {
+  background: #f8fbfd;
+  box-shadow: inset 3px 0 0 rgba(15, 118, 110, 0.32);
+}
+
+.tableRow:last-child {
+  border-bottom: 0;
+}
+
+.tableRow > div:first-child {
+  display: grid;
+  gap: 4px;
+}
+
+@media (min-width: 720px) {
+  .page {
+    padding: 24px 24px 40px;
+  }
+
+  .pageHeader h1,
+  .authCard h1,
+  .carTitleBlock h1 {
+    font-size: 2.1rem;
+  }
+
+  .carGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .filterGrid,
+  .formGrid,
+  .adminModelFields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .specGrid,
+  .statsGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .tripDetails {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .tripDetails div {
+    display: block;
+  }
+
+  .tripDetails dd {
+    text-align: left;
+  }
+
+  .adminTabs {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    margin: 0 0 14px;
+    padding: 0;
+    overflow-x: visible;
+  }
+
+  .adminTabs button {
+    min-width: 0;
+  }
+
+  .tableRow {
+    grid-template-columns: 1fr minmax(220px, 320px);
+    align-items: center;
+  }
+}
+
+@media (min-width: 1020px) {
+  .appShell {
+    padding-bottom: 78px;
+  }
+
+  .topbar {
+    padding-inline: 28px;
+  }
+
+  .bottomNav {
+    right: 50%;
+    bottom: 16px;
+    left: auto;
+    width: min(420px, calc(100vw - 32px));
+    grid-template-columns: repeat(auto-fit, minmax(72px, 1fr));
+    padding: 8px;
+    transform: translateX(50%);
+  }
+
+  .bottomNav a {
+    min-height: 48px;
+  }
+
+  .carGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .filterSheet {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: min(420px, 100vw);
+    max-height: 100vh;
+    border-radius: 8px 0 0 8px;
+    transform: translateX(105%);
+  }
+
+  .filterSheet.open {
+    transform: translateX(0);
+  }
+
+  .sheetHandle {
+    display: none;
+  }
+
+  .carPage {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 360px;
+    gap: 20px;
+  }
+
+  .carPage .backLink,
+  .carPage .carHero,
+  .carPage .carTitleBlock,
+  .carPage .specGrid,
+  .carPage .sectionBlock {
+    grid-column: 1;
+  }
+
+  .bookingPanel {
+    position: sticky;
+    top: 82px;
+    grid-column: 2;
+    grid-row: 2 / span 4;
+    align-self: start;
+  }
+}
+
+@media print {
+  .topbar,
+  .bottomNav,
+  .button {
+    display: none !important;
+  }
+
+  .modalBackdrop {
+    position: static;
+    display: block !important;
+    padding: 0;
+    background: #fff;
+  }
+
+  .receipt {
+    display: block !important;
+  }
+}

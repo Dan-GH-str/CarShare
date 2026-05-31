@@ -1,0 +1,22 @@
+{
+  "name": "carshare",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev -w frontend\" \"npm run start:dev -w backend\"",
+    "frontend:dev": "npm run dev -w frontend",
+    "backend:dev": "npm run start:dev -w backend",
+    "db:up": "docker compose up -d db",
+    "db:down": "docker compose down",
+    "lint": "npm run lint -w frontend && npm run lint -w backend",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "prettier": "^3.3.3"
+  }
+}

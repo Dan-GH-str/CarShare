@@ -1,0 +1,263 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  BLOCKED
+}
+
+enum TransmissionType {
+  AUTOMATIC
+  MANUAL
+}
+
+enum FuelType {
+  GASOLINE
+  HYBRID
+  ELECTRIC
+}
+
+enum DriveType {
+  FWD
+  RWD
+  AWD
+}
+
+enum CarStatus {
+  AVAILABLE
+  RESERVED
+  ACTIVE
+  MAINTENANCE
+  DISABLED
+}
+
+enum RateType {
+  HOURLY
+  DAILY
+  LONG_TERM
+}
+
+enum PricingType {
+  FIXED
+  PER_HOUR
+  PER_DAY
+}
+
+enum BookingStatus {
+  RESERVED
+  ACTIVE
+  COMPLETED
+  CANCELLED
+  EXPIRED
+}
+
+enum ModerationStatus {
+  PENDING
+  PUBLISHED
+  HIDDEN
+}
+
+model User {
+  id             String          @id @default(cuid())
+  email          String          @unique
+  passwordHash   String
+  lastName       String
+  firstName      String
+  middleName     String?
+  phone          String
+  role           UserRole        @default(USER)
+  status         UserStatus      @default(ACTIVE)
+  sessions       RefreshToken[]
+  bookings       Booking[]
+  carReviews     CarReview[]
+  serviceReviews ServiceReview[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+}
+
+model RefreshToken {
+  id               String    @id @default(cuid())
+  userId           String
+  refreshTokenHash String
+  expiresAt        DateTime
+  createdAt        DateTime  @default(now())
+  revokedAt        DateTime?
+  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model CarCategory {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  description String
+  isActive    Boolean  @default(true)
+  cars        Car[]
+  tariffs     Tariff[]
+}
+
+model CarModel {
+  id           String           @id @default(cuid())
+  brand        String
+  name         String
+  trim         String
+  transmission TransmissionType
+  fuelType     FuelType
+  driveType    DriveType
+  seats        Int
+  year         Int
+  features     Json
+  description  String
+  cars         Car[]
+
+  @@unique([brand, name, trim])
+}
+
+model Car {
+  id          String      @id @default(cuid())
+  modelId     String
+  categoryId  String
+  vin         String      @unique
+  plateNumber String      @unique
+  color       String
+  status      CarStatus   @default(AVAILABLE)
+  latitude    Float
+  longitude   Float
+  address     String
+  mileage     Int
+  images      Json
+  model       CarModel    @relation(fields: [modelId], references: [id])
+  category    CarCategory @relation(fields: [categoryId], references: [id])
+  tariffs     Tariff[]
+  bookings    Booking[]
+  reviews     CarReview[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([categoryId])
+  @@index([status])
+}
+
+model Tariff {
+  id                 String       @id @default(cuid())
+  carId              String?
+  categoryId         String?
+  hourlyPrice        Int
+  dailyPrice         Int
+  longTermDailyPrice Int
+  longTermFromDays   Int          @default(7)
+  isActive           Boolean      @default(true)
+  car                Car?         @relation(fields: [carId], references: [id], onDelete: Cascade)
+  category           CarCategory? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+
+  @@index([carId])
+  @@index([categoryId])
+}
+
+model ExtraOption {
+  id             String          @id @default(cuid())
+  code           String          @unique
+  name           String
+  description    String
+  price          Int
+  pricingType    PricingType
+  isActive       Boolean         @default(true)
+  bookingOptions BookingOption[]
+}
+
+model Booking {
+  id                 String          @id @default(cuid())
+  userId             String
+  carId              String
+  startAt            DateTime
+  plannedEndAt       DateTime
+  actualStartAt      DateTime?
+  actualEndAt        DateTime?
+  cancelledAt        DateTime?
+  freeWaitUntil      DateTime
+  expiresAt          DateTime
+  status             BookingStatus   @default(RESERVED)
+  rateType           RateType
+  baseAmount         Int
+  optionsAmount      Int
+  waitAmount         Int             @default(0)
+  cancellationAmount Int             @default(0)
+  totalAmount        Int
+  user               User            @relation(fields: [userId], references: [id])
+  car                Car             @relation(fields: [carId], references: [id])
+  options            BookingOption[]
+  receipt            Receipt?
+  carReviews         CarReview[]
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+
+  @@index([userId, status])
+  @@index([carId, status])
+  @@index([status, expiresAt])
+}
+
+model BookingOption {
+  id            String      @id @default(cuid())
+  bookingId     String
+  optionId      String
+  quantity      Int         @default(1)
+  priceSnapshot Int
+  metadata      Json?
+  booking       Booking     @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  option        ExtraOption @relation(fields: [optionId], references: [id])
+}
+
+model Receipt {
+  id             String   @id @default(cuid())
+  bookingId      String   @unique
+  number         String   @unique
+  issuedAt       DateTime @default(now())
+  carSnapshot    Json
+  userSnapshot   Json
+  tariffSnapshot Json
+  lines          Json
+  totalAmount    Int
+  booking        Booking  @relation(fields: [bookingId], references: [id])
+}
+
+model CarReview {
+  id               String           @id @default(cuid())
+  userId           String
+  carId            String
+  bookingId        String?
+  rating           Int
+  text             String
+  moderationStatus ModerationStatus @default(PUBLISHED)
+  user             User             @relation(fields: [userId], references: [id])
+  car              Car              @relation(fields: [carId], references: [id])
+  booking          Booking?         @relation(fields: [bookingId], references: [id])
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  @@index([carId, moderationStatus])
+}
+
+model ServiceReview {
+  id               String           @id @default(cuid())
+  userId           String
+  rating           Int
+  text             String
+  moderationStatus ModerationStatus @default(PUBLISHED)
+  user             User             @relation(fields: [userId], references: [id])
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+}

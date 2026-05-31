@@ -1,0 +1,14 @@
+node_modules/
+dist/
+coverage/
+.env
+.env.local
+.env.*.local
+.DS_Store
+*.log
+.vite/
+.turbo/
+backend/generated/
+backend/prisma/dev.db
+backend/uploads/*
+!backend/uploads/.gitkeep

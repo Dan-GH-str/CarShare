@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: carshare-api
+    runtime: node
+    plan: free
+    rootDir: .
+    buildCommand: npm ci && npm run prisma:generate -w backend && npm run build -w backend
+    startCommand: npm run prisma:migrate:deploy -w backend && npm run start -w backend
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_ACCESS_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: ACCESS_TOKEN_TTL
+        value: 15m
+      - key: REFRESH_TOKEN_TTL_DAYS
+        value: "30"

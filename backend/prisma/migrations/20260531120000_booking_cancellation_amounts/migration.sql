@@ -1,0 +1,2 @@
+ALTER TABLE "Booking" ADD COLUMN "cancelledAt" TIMESTAMP(3);
+ALTER TABLE "Booking" ADD COLUMN "cancellationAmount" INTEGER NOT NULL DEFAULT 0;
