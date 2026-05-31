@@ -42,7 +42,7 @@ This value will be used as `DATABASE_URL` for the backend.
    - Build command:
 
 ```bash
-npm ci && npm run prisma:generate -w backend && npm run build -w backend
+npm ci --include=dev && npm run prisma:generate -w backend && npm run build -w backend
 ```
 
    - Start command:

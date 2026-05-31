@@ -4,7 +4,7 @@ services:
     runtime: node
     plan: free
     rootDir: .
-    buildCommand: npm ci && npm run prisma:generate -w backend && npm run build -w backend
+    buildCommand: npm ci --include=dev && npm run prisma:generate -w backend && npm run build -w backend
     startCommand: npm run prisma:migrate:deploy -w backend && npm run start -w backend
     autoDeploy: true
     envVars:
