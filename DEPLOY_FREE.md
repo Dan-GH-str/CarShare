@@ -101,6 +101,52 @@ dist
 
 Deploy. The app should now open from the Vercel URL and call the Render API.
 
+## Alternative frontend hosting
+
+If Vercel account login or registration does not work, use one of these free static hosts instead.
+
+### Cloudflare Pages
+
+1. Create a Cloudflare account.
+2. Open Workers & Pages -> Pages -> Connect to Git.
+3. Select the same GitHub repository.
+4. Use these settings:
+   - Build command: `npm ci && npm run build -w frontend`
+   - Build output directory: `frontend/dist`
+   - Root directory: repository root
+5. Add environment variables:
+   - `NODE_VERSION`: `20`
+   - `VITE_API_URL`: your Render backend URL, without trailing slash.
+   - `VITE_YANDEX_MAPS_API_KEY`: optional.
+
+### Netlify
+
+1. Create a Netlify account.
+2. Add new site from Git.
+3. Select the same GitHub repository.
+4. Use these settings:
+   - Base directory: leave empty or repository root
+   - Build command: `npm ci && npm run build -w frontend`
+   - Publish directory: `frontend/dist`
+5. Add environment variables:
+   - `NODE_VERSION`: `20`
+   - `VITE_API_URL`: your Render backend URL, without trailing slash.
+   - `VITE_YANDEX_MAPS_API_KEY`: optional.
+
+### Render Static Site
+
+Use this if you want backend and frontend inside the same Render account.
+
+1. Create a new Render Static Site.
+2. Select the same GitHub repository.
+3. Use these settings:
+   - Build command: `npm ci && npm run build -w frontend`
+   - Publish directory: `frontend/dist`
+4. Add environment variables:
+   - `NODE_VERSION`: `20`
+   - `VITE_API_URL`: your Render backend URL, without trailing slash.
+   - `VITE_YANDEX_MAPS_API_KEY`: optional.
+
 ## 6. Important free-tier limitations
 
 - Render Free Web Services can spin down when idle, so the first request after a pause may be slow.
